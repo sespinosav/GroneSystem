@@ -45,6 +45,7 @@ make migrations in all modules
 
 # Run
 cd Kernel
+
 python main.py
 
 # Stop Program
