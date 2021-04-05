@@ -1,0 +1,2 @@
+title groneSystemKernel
+python manage.py runserver
