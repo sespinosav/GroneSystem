@@ -15,7 +15,7 @@ Simulator about operating system make in API Django and PyQt5 GUI.
   
     CREATE DATABASE nombreDB CHARACTER SET utf8mb4;
     
-    CREATE USER 'nombreusuario@localhost' IDENTIFIED BY 'pass';
+    CREATE USER nombreusuario@localhost IDENTIFIED BY 'pass';
     
     GRANT ALL PRIVILEGES ON nombreDB.* TO 'nombreusuario@localhost';
     
