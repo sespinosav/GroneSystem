@@ -3,8 +3,11 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from random import randint
 
 import sys
+
+import os
 
 
 class Window(QMainWindow):
@@ -13,10 +16,12 @@ class Window(QMainWindow):
 		super().__init__()
 
 		# setting title
-		self.setWindowTitle("Python ")
+		self.setWindowTitle(f"APP {sys.argv[1]}")
 
 		# setting geometry
-		self.setGeometry(100, 100, 360, 350)
+		self.setGeometry(randint(30, 1500), randint(10, 500), 360, 350)
+
+		self.setWindowIcon(QIcon('calculator.png'))
 
 		# calling method
 		self.UiComponents()
@@ -285,8 +290,8 @@ class Window(QMainWindow):
 		self.label.setText(text[:len(text)-1])
 
 
-def calculator():
-    # create pyqt5 app
+if __name__ == "__main__":
+	# create pyqt5 app
     App = QApplication(sys.argv)
 
     # create the instance of our Window

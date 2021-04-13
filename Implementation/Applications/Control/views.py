@@ -4,6 +4,8 @@ from rest_framework.response import Response
 
 from .service import ApplicationsService
 
+import requests
+
 class ApplicationsView(APIView):
 
     def get(self, request):
@@ -14,4 +16,6 @@ class ApplicationsView(APIView):
         return Response({"message" : "get method allow "})
 
     def post(self, request):
-        return Response({"message" : "post method allow", "data_post" : f'{request.data["message"]}'})
+        if "cmd" in request.data:
+            if request.data["cmd"] == "init":
+                return Response(requests.post("http://127.0.0.1:8001/api/kernel/", {"cmd":"init", "src":"APP", "dst":"FILESMANAGER", "msg":request.data["msg"]}))

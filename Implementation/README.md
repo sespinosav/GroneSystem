@@ -15,7 +15,7 @@ Simulator about operating system make in API Django and PyQt5 GUI.
   
     CREATE DATABASE nombreDB CHARACTER SET utf8mb4;
     
-    CREATE USER nombreusuario@localhost IDENTIFIED BY 'pass';
+    CREATE USER 'nombreusuario@localhost' IDENTIFIED BY 'pass';
     
     GRANT ALL PRIVILEGES ON nombreDB.* TO 'nombreusuario@localhost';
     
@@ -44,9 +44,9 @@ Simulator about operating system make in API Django and PyQt5 GUI.
     }
 
 # Configure python dependencies
-conda create --name envname --file requirements.txt
+conda create --name <envname> --file requirements.txt
   
-conda activate envname
+conda activate <envname>
 
 # Configure migrations
 make migrations in all modules

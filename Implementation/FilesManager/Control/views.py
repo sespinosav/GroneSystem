@@ -11,6 +11,10 @@ from .service import FilesManagerService
 
 import requests
 
+from datetime import date
+from datetime import datetime
+
+
 class FilesManagerView(ListModelMixin, CreateModelMixin, GenericAPIView):
     queryset = Register.objects.all()
     serializer_class = RegisterSerializer
@@ -24,6 +28,12 @@ class FilesManagerView(ListModelMixin, CreateModelMixin, GenericAPIView):
             elif request.data["cmd"] == "send":
                 requests.post(url = "http://127.0.0.1:8003/api/filesManager/", data = {"title":"log", "description": "register of log type",
                 "body":request.data["msg"].strip(":")[1],"state": "allow"})
+            elif request.data["cmd"] == "init":
+                requests.post(url = "http://127.0.0.1:8003/api/filesManager/", data = {"title":"log", "description": f"{request.data['msg']}",
+                "body":f"{date.today()}-{datetime.now().time()}->{request.data['msg']}","state": "running"})  
+            elif request.data["cmd"] == "create":
+                requests.post(url = "http://127.0.0.1:8003/api/filesManager/", data = {"title":"log", "description": f"create {request.data['msg']}",
+                "body":f"{date.today()}-{datetime.now().time()}->CREATE FOLDER {request.data['msg']}","state": "running"})     
         if 'pk' not in kwargs:
             return self.list(request, *args, *kwargs)           
         registration = Register.objects.get(pk=kwargs['pk'])
@@ -34,11 +44,11 @@ class FilesManagerView(ListModelMixin, CreateModelMixin, GenericAPIView):
         if "msg" in request.data:
             if request.data["msg"] == "Applications TurOn OK":
                 requests.post(url = "http://127.0.0.1:8003/api/filesManager/", data = {"title":"Applications ON", "description": "Applications Modules is on",
-                "body":"Now you can use module applications for create applications","state": "allow"})
+                "body":"Now you can use module applications for create applications","state": "running"})
                 return Response({"msg":"ok"})
             elif request.data["msg"] == "FilesManager TurnOn OK":
                 requests.post(url = "http://127.0.0.1:8003/api/filesManager/", data = {"title":"FilesManager ON", "description": "FilesManager Modules is on",
-                "body":"Now you can use FilesManager module for create applications","state": "allow"})
+                "body":"Now you can use FilesManager module for create applications","state": "running"})
                 return Response({"msg":"ok"})
         elif request.data['title'] == "Applications ON":
             service = FilesManagerService()
@@ -48,6 +58,9 @@ class FilesManagerView(ListModelMixin, CreateModelMixin, GenericAPIView):
             return self.create(request, *args, **kwargs)
         if "cmd" in request.data:
             return self.create(request, *args, **kwargs)
+        if "title" in request.data:
+            if request.data['title'] == "log":
+                return self.create(request, *args, **kwargs)
 
     def delete(self, request, pk=None):
         if pk==None:
